@@ -17,59 +17,64 @@
   <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
 
 
-  <style>
-    body {
+<style>
+  body {
 
-      background-image: url(https://cdn.wallpapersafari.com/10/48/sfWn4h.jpg);
-      margin: 30px;
-    }
+    background-image: url(https://cdn.wallpapersafari.com/10/48/sfWn4h.jpg
+https: //cdn.wallpapersafari.com/10/48/sfWn4h.jpg
+      );
+    margin: 30px;
+  }
 
-    thead {
-      text-align: center;
-    }
+  thead {
+    text-align: center;
+  }
 
-    #employee-table th,
-    td {
+  #employee-table th,
+  td {
 
-      display: inline-block;
-      width: 16.575%;
-    }
+    display: inline-block;
+    width: 16.575%;
+  }
 
-    .jumbotron {
-      padding-bottom: 30px;
-      border: 7px solid blue;
-      opacity: 0.9;
-      margin: -10px;
-      margin-bottom: 25px;
-      padding: 20px;
-      background-color: #ebebeb;
-      text-align: center;
-      font-size: 15px;
-      color: white;
-      height: 180px;
-    }
+  .jumbotron {
+    padding-bottom: 30px;
+    border: 7px solid blue;
+    opacity: 0.9;
+    margin: -10px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #ebebeb;
+    text-align: center;
+    font-size: 15px;
+    color: white;
+    height: 180px;
+  }
 
-    .card-body {
-      border: 7px solid blue;
-    }
+  .card-body {
+    border: 7px solid blue;
+    padding: 20px;
+  }
 
-    .row {
+  .row {
 
-      margin: 0px;
-      padding: 0px;
-    }
+    margin: 0px;
+    padding: 0px;
+  }
 
+  .card-header {
+    font-size: 22px;
+    text-align: center;
+    background-color: blue;
+    color: white;
 
+  }
 
-
-    .card-header {
-      font-size: 22px;
-      text-align: center;
-      background-color: blue;
-      color: white;
-
-    }
-  </style>
+  #movie-list {
+    padding-left: 50px;
+    padding-top: 30px;
+  }
+</style>
 </head>
 
 <body>
@@ -94,8 +99,8 @@
             <table class="table table-sm table-hover" id='employee-table'>
               <thead>
                 <div class="form-group">
-                  <label for="movie-search">Movie Name</label>
-                  <input class="form-control" id="movie-search" placeholder="Matrix" type="text">
+                  <label for="movie-search">Your Movie</label>
+                  <input class="form-control" id="movie-search" placeholder="Movie Name" type="text">
                   <button class="btn btn-primary float-right" id="submit" type="submit"><strong>Movie
                       Search</strong></button>
               </thead>

@@ -117,7 +117,8 @@ $(function () {
     // deleting data
     cross.on('click', function (e) {
       e.stopPropagation();
-      alert('clicked')
+      // confirm('Do you want to delete this movie?');
+      alert('Do you want to delete this movie?')
       let id = e.target.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
       // console.log(id);
       // console.log(db.collection('movies').doc(id));
