@@ -4,6 +4,7 @@ $(function () {
   let form = $("#movie-search");
   // let movieList = $("#movie-list");
   let movieList = document.getElementById('movie-list');
+  // let gif = $('<img>')
   
   
 
@@ -22,7 +23,7 @@ $(function () {
       url: queryURL,
       method: "GET"
     }).then(function (response) {
-
+      console.log(queryURL);
       console.log(response);
 
       // grabbing and storing data in vars from response:
@@ -33,6 +34,7 @@ $(function () {
       let actors = response.Actors;
       let plot = response.Plot;
       let imageUrl = response.Poster;
+      let website = response.Website;
 
 
       // console.log(plot);
@@ -44,7 +46,8 @@ $(function () {
         runtime: runtime,
         actors: actors,
         plot: plot,
-        image: imageUrl
+        image: imageUrl,
+        website: website
       });
       form.value = '';
 
@@ -55,12 +58,14 @@ $(function () {
  
   //rendering movies
   function renderMovie(doc) {
-    // let table = $("<tbody class='text-center'>");
     let title = $("<p class='z-depth-2'>");
     let year = $("<p>");
     let runtime = $("<p>");
     let actors = $("<p>");
     let plot = $("<p>");
+    let websitePlace = $("<p>");
+    let websiteLink = $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
+    websitePlace.append(websiteLink);
     let buttonGifs = $('<button type="button" class="btn btn - info showGifs"> Show Gifs </button>');
     let cross = $("<p>");
     let imagePlace = $("<img height='250'>");
@@ -71,12 +76,13 @@ $(function () {
       title.text(doc.data().title),
       year.text(doc.data().year),
       runtime.text(doc.data().runtime),
+      websitePlace.append(websiteLink),
       actors.text(doc.data().actors),
       imagePlace.attr("src", doc.data().image),
       plot.text(doc.data().plot),
+      
       buttonGifs.text('Show Gifs'),
       cross.html('<i class="far fa-trash-alt"></i>')
-      // cross.html('X')
     );
     buttonGifs.attr('data-name', doc.data().title)
     let movieRow = $("<div class='row mb-2'>")
@@ -101,18 +107,19 @@ $(function () {
         url: queryURLgifs,
         method: "GET"
       }).then(function (resp) {
-        console.log(queryURLgifs);
-        console.log(resp);
+        // console.log(queryURLgifs);
+        // console.log(resp);
         for (let i = 0; i < resp.data.length; i++) {
           let imgGif = $('<img>')
           // gifDiv.addClass('carGif m-1 shadow p-3 mb-5 bg-white rounded')
           imgGif.attr('src', resp.data[i].images.fixed_width.url);
           imgGif.attr('id', resp.data[i].id);
+          // imgGif.append($('<div>X</div>');
           gifDiv.append(imgGif);
         }
       })
     
-    } )
+    })
 
     // deleting data
     cross.on('click', function (e) {
@@ -142,6 +149,16 @@ $(function () {
       }
     });
   })
+  //function to removing some particular gif
+  // let gif = $('<img>')
+  // gif.on('click', function(){
+    
+  //   for (let j=0; j<gif.length; j++) {
+  //     alert('gif clicked');
+  //     $(this).remove();
+  //   }
+    
+  // })
 
 });
 
