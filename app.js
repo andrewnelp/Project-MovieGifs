@@ -19,45 +19,7 @@ $(function () {
     let queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=13a937dc";
 
      
-    //  Creating an $.get call from youtube api
-    $.get(
-      "https://www.googleapis.com/youtube/v3/search", {
-        part: 'snippet, id',
-        q: 'movie',
-        type: 'video',
-        key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'},
-        function(data) {
-          // let nextPageToken = data.nextPageToken;
-          // let prevPageToken = data.prevPageToken;
-          console.log(data);
-        
-      $.each(data.items, function(i, item){
-        //getting output
-        // var videoId = item.id.videoId;
-        let titleYoutube = item.snippet.title;
-        let descriptionYoutube = item.snippet.description;
-        let thumbYoutube = item.snippet.thumbnails.high.url;
-        console.log(thumbYoutube);
-        let videoDiv = $("<div>");
-        $("<li>").append(titleYoutube);
-        $("<li>").append(descriptionYoutube);
-        let imgYoutube = $("<img>").attr("src", thumbYoutube);
-        $("div").append(imgYoutube);
-        // console.log(titleYoutube);
-
-        //appending the items
-        videoDiv.append(titleYoutube, descriptionYoutube, thumbYoutube);
-        movieList.prepend(videoDiv);
-        
-        //storing values in Database
-        // db.collection('movie-Youtube').add({
-        //   titleYoutube: titleYoutube,
-        //   descriptionYoutube: descriptionYoutube,
-        //   thumbYoutube: thumbYoutube,
-        // });
-        });
-      }
-    )
+   
 
     // Creating an AJAX call for search movie button being clicked
     $.ajax({
@@ -119,7 +81,9 @@ $(function () {
     let websitePlace = $("<p>");
     let websiteLink = $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
     websitePlace.append(websiteLink);
-    let buttonGifs = $('<button type="button" class="btn btn - info showGifs"> Show Gifs </button>');
+    let buttonGifs = $('<button type="button" class="btn btn-info showGifs mb-2">  </button>');
+    let buttonvVid = $('<button type="button" class="btn btn-primary showVid">  </button>');
+
     let cross = $("<p>");
     let imagePlace = $("<img height='250'>");
 
@@ -135,18 +99,23 @@ $(function () {
       plot.text(doc.data().plot),
       
       buttonGifs.text('Show Gifs'),
+      buttonvVid.text('Video List'),
       cross.html('<i class="far fa-trash-alt"></i>')
     );
     buttonGifs.attr('data-name', doc.data().title)
+    buttonvVid.attr('data-name', doc.data().title)
     let movieRow = $("<div class='row mb-2'>")
-    let colOne = $('<div class="col s5">');
-    let colTwo = $('<div class="col s7 second">');
+    let colOne = $('<div class="col s4">');
+    let colTwo = $('<div class="col s4 second">');
+    let colThree = $('<div class="col s4">')
     let gifDiv = $("<div>");
+    let videoDiv = $("<div>");
     
     movieRow = movieRow.attr('data-id', doc.id);
     colOne.append(ulInfo);
     colTwo.append(gifDiv);
-    movieRow.append(colOne, colTwo);
+    colThree.append(videoDiv);
+    movieRow.append(colOne, colTwo, colThree);
     movieRow.prependTo(movieList);
     
     //showing gifs
@@ -160,18 +129,70 @@ $(function () {
         url: queryURLgifs,
         method: "GET"
       }).then(function (resp) {
-        console.log(queryURLgifs);
-        console.log(resp);
+        // console.log(queryURLgifs);
+        // console.log(resp);
         for (let i = 0; i < resp.data.length; i++) {
           let imgGif = $('<img>')
-          // gifDiv.addClass('carGif m-1 shadow p-3 mb-5 bg-white rounded')
           imgGif.attr('src', resp.data[i].images.preview_gif.url);
           imgGif.attr('id', resp.data[i].id);
-          // imgGif.append($('<div>X</div>');
           gifDiv.append(imgGif);
         }
       })
     
+    })
+
+    // showing videos from youtube
+    buttonvVid.on("click", function (e) {
+      e.stopPropagation();
+      let videos = $(this).attr("data-name");
+      console.log("videos" + videos);
+      //  Creating an $.get call from youtube api
+      $.get(
+        "https://www.googleapis.com/youtube/v3/search", {
+        
+          part: 'snippet, id',
+          q: videos,
+          type: 'videos',
+          key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'
+        },
+        // "https://www.googleapis.com/youtube/v3/videos", {
+        //   part: "snippet",
+        //   chart: "mostPopular",
+        //   // key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'
+        // },
+        
+        function (data) {
+         
+          console.log(data);
+
+          $.each(data.items, function (i, item) {
+            console.log(data);
+            //getting output
+            var videoId = item.id.videoId;
+            let titleYoutube = item.snippet.title;
+            let descriptionYoutube = item.snippet.description;
+            let thumbYoutube = item.snippet.thumbnails.default.url;
+            // console.log(thumbYoutube);
+            let titleY = $("<div>").append(titleYoutube);
+            let vidId = $("<div>").append("YouTube Video ID: " + videoId);
+            let descrY = $("<div>").append(descriptionYoutube);
+            let imgYoutube = $("<img>").attr("src", thumbYoutube).attr('video-id', videoId);
+            videoDiv.append(titleY,vidId, imgYoutube);
+            console.log(imgYoutube);
+
+
+            //storing values in Database
+            // db.collection('movie-Youtube').add({
+            //   titleYoutube: titleYoutube,
+            //   descriptionYoutube: descriptionYoutube,
+            //   thumbYoutube: thumbYoutube,
+            // });
+          });
+          //appending the items
+          // videoDiv.append(titleYoutube, descriptionYoutube, thumbYoutube);
+          // movieList.prepend(videoDiv);
+        }
+      )
     })
 
     // deleting data
