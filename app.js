@@ -13,18 +13,59 @@ $(function () {
     e.preventDefault();
     // This line grabs the input from the textbox
     let movie = form.val().trim();
+    // movie+= "movie";
+    // console.log(movie);
     //url for movies
     let queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=13a937dc";
 
      
-      
-    // Creating an AJAX call for the specific movie button being clicked
+    //  Creating an $.get call from youtube api
+    $.get(
+      "https://www.googleapis.com/youtube/v3/search", {
+        part: 'snippet, id',
+        q: 'movie',
+        type: 'video',
+        key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'},
+        function(data) {
+          // let nextPageToken = data.nextPageToken;
+          // let prevPageToken = data.prevPageToken;
+          console.log(data);
+        
+      $.each(data.items, function(i, item){
+        //getting output
+        // var videoId = item.id.videoId;
+        let titleYoutube = item.snippet.title;
+        let descriptionYoutube = item.snippet.description;
+        let thumbYoutube = item.snippet.thumbnails.high.url;
+        console.log(thumbYoutube);
+        let videoDiv = $("<div>");
+        $("<li>").append(titleYoutube);
+        $("<li>").append(descriptionYoutube);
+        let imgYoutube = $("<img>").attr("src", thumbYoutube);
+        $("div").append(imgYoutube);
+        // console.log(titleYoutube);
+
+        //appending the items
+        videoDiv.append(titleYoutube, descriptionYoutube, thumbYoutube);
+        movieList.prepend(videoDiv);
+        
+        //storing values in Database
+        // db.collection('movie-Youtube').add({
+        //   titleYoutube: titleYoutube,
+        //   descriptionYoutube: descriptionYoutube,
+        //   thumbYoutube: thumbYoutube,
+        // });
+        });
+      }
+    )
+
+    // Creating an AJAX call for search movie button being clicked
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function (response) {
-      console.log(queryURL);
-      console.log(response);
+      // console.log(queryURL);
+      // console.log(response);
 
       // grabbing and storing data in vars from response:
 
@@ -55,6 +96,18 @@ $(function () {
 
   })
 
+  //renderin yourube thumbs
+  // function renderYoutube(doc) {
+  //   let videoDiv = $("<div>").attr('data-id', doc.id);
+  //   let titleYoutube = $("<li>");
+  //   let descriptionYoutube = $("<li>");
+  //   let thumbYoutube = $("<img>").attr("src", doc.data().thumbYoutube);
+  //   // console.log(titleYoutube);
+
+  //   //appending the items
+  //   videoDiv.append(titleYoutube, descriptionYoutube,thumbYoutube);
+  //   movieList.prepend(videoDiv);
+  // }
  
   //rendering movies
   function renderMovie(doc) {
@@ -107,12 +160,12 @@ $(function () {
         url: queryURLgifs,
         method: "GET"
       }).then(function (resp) {
-        // console.log(queryURLgifs);
-        // console.log(resp);
+        console.log(queryURLgifs);
+        console.log(resp);
         for (let i = 0; i < resp.data.length; i++) {
           let imgGif = $('<img>')
           // gifDiv.addClass('carGif m-1 shadow p-3 mb-5 bg-white rounded')
-          imgGif.attr('src', resp.data[i].images.fixed_width.url);
+          imgGif.attr('src', resp.data[i].images.preview_gif.url);
           imgGif.attr('id', resp.data[i].id);
           // imgGif.append($('<div>X</div>');
           gifDiv.append(imgGif);
@@ -130,10 +183,12 @@ $(function () {
       // console.log(id);
       // console.log(db.collection('movies').doc(id));
       db.collection('movies').doc(id).delete();
+      db.collection('movie-Youtube').doc(id).delete();
+      // console.log(db.collection('movie-Youtube').doc(id));
     });
   }
 
-  // real-time listener
+  // real-time listener for omdb db
   db.collection('movies').onSnapshot(snapshot => {
     let changes = snapshot.docChanges();
     // console.log(changes);
@@ -148,6 +203,28 @@ $(function () {
         movieList.removeChild(divRemove);
       }
     });
+  })
+  // real-time listener for youtube
+  // db.collection('movie-Youtube').onSnapshot(snapshot => {
+  //   let changes = snapshot.docChanges();
+  //   // console.log(changes);
+  //   changes.forEach(change => {
+  //     // console.log(change.doc.data());
+  //     if (change.type == 'added') {
+  //       renderYoutube(change.doc);
+  //     } else if (change.type == 'removed') {
+  //       //finding the div with attr
+  //       let divRemove = movieList.querySelector('[data-id=' + change.doc.id + ']');
+  //       // console.log(divRemove)
+  //       movieList.removeChild(divRemove);
+  //     }
+  //   });
+  // })
+
+  form.on('focus', function(){
+    $(this).animate({
+      width: '60%',
+    },800)
   })
   //function to removing some particular gif
   // let gif = $('<img>')
