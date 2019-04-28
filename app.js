@@ -57,23 +57,10 @@ $(function () {
     });
 
   })
-
-  //renderin yourube thumbs
-  // function renderYoutube(doc) {
-  //   let videoDiv = $("<div>").attr('data-id', doc.id);
-  //   let titleYoutube = $("<li>");
-  //   let descriptionYoutube = $("<li>");
-  //   let thumbYoutube = $("<img>").attr("src", doc.data().thumbYoutube);
-  //   // console.log(titleYoutube);
-
-  //   //appending the items
-  //   videoDiv.append(titleYoutube, descriptionYoutube,thumbYoutube);
-  //   movieList.prepend(videoDiv);
-  // }
  
   //rendering movies
   function renderMovie(doc) {
-    let title = $("<p class='z-depth-2'>");
+    let title = $("<h4 class='z-depth-2'>");
     let year = $("<p>");
     let runtime = $("<p>");
     let actors = $("<p>");
@@ -81,8 +68,8 @@ $(function () {
     let websitePlace = $("<p>");
     let websiteLink = $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
     websitePlace.append(websiteLink);
-    let buttonGifs = $('<button type="button" class="btn btn-info showGifs mb-2">  </button>');
-    let buttonvVid = $('<button type="button" class="btn btn-primary showVid">  </button>');
+    let buttonGifs = $('<button type="button" class="btn btn-info mb-2">  </button>');
+    let buttonvVid = $('<button type="button" class="btn btn-primary">  </button>');
 
     let cross = $("<p>");
     let imagePlace = $("<img height='250'>");
@@ -90,17 +77,16 @@ $(function () {
     
     //appending all the elements
     let ulInfo = $('<div>').append(
-      title.text(doc.data().title),
-      year.text(doc.data().year),
-      runtime.text(doc.data().runtime),
+      title.html('<strong>' + doc.data().title + '</strong>'),
+      year.text('Release Year: ' + doc.data().year),
+      runtime.text('Duration: ' + doc.data().runtime),
       websitePlace.append(websiteLink),
-      actors.text(doc.data().actors),
-      imagePlace.attr("src", doc.data().image),
-      plot.text(doc.data().plot),
-      
+      actors.text('Actors: ' + doc.data().actors),
+      imagePlace.attr("src", doc.data().image).css('width', '180px'),
+      plot.text('Plot: ' + doc.data().plot),
       buttonGifs.text('Show Gifs'),
       buttonvVid.text('Video List'),
-      cross.html('<i class="far fa-trash-alt"></i>')
+      cross.html('<p>Delete Movie  <i class="far fa-trash-alt"></i></p>')
     );
     buttonGifs.attr('data-name', doc.data().title)
     buttonvVid.attr('data-name', doc.data().title)
@@ -120,19 +106,19 @@ $(function () {
     
     //showing gifs
     buttonGifs.on('click', function(event){
-      event.stopPropagation();
+      event.preventDefault();
       //url for gifs
       let movieGif = $(this).attr("data-name");
-      let queryURLgifs = "http://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=7";
+      let queryURLgifs = "http://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=10";
 
       $.ajax({
         url: queryURLgifs,
         method: "GET"
       }).then(function (resp) {
-        // console.log(queryURLgifs);
-        // console.log(resp);
+        console.log(queryURLgifs);
+        console.log(resp);
         for (let i = 0; i < resp.data.length; i++) {
-          let imgGif = $('<img>')
+          let imgGif = $('<img>').css('width', '170px')
           imgGif.attr('src', resp.data[i].images.preview_gif.url);
           imgGif.attr('id', resp.data[i].id);
           gifDiv.append(imgGif);
@@ -155,11 +141,7 @@ $(function () {
           type: 'videos',
           key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'
         },
-        // "https://www.googleapis.com/youtube/v3/videos", {
-        //   part: "snippet",
-        //   chart: "mostPopular",
-        //   // key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'
-        // },
+        
         
         function (data) {
          
@@ -174,10 +156,14 @@ $(function () {
             let thumbYoutube = item.snippet.thumbnails.default.url;
             // console.log(thumbYoutube);
             let titleY = $("<div>").append(titleYoutube);
-            let vidId = $("<div>").append("YouTube Video ID: " + videoId);
+            // let vidId = $("<div>").append("YouTube Video ID: " + videoId);
+            $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
+            let vidIdlink = $("<a target='_blank'>").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).text('Watch on Youtube');
+            let vidID = $("<div>");
+            vidID.append(vidIdlink);
             let descrY = $("<div>").append(descriptionYoutube);
-            let imgYoutube = $("<img>").attr("src", thumbYoutube).attr('video-id', videoId);
-            videoDiv.append(titleY,vidId, imgYoutube);
+            let imgYoutube = $("<img>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
+            videoDiv.append(titleY,vidID, imgYoutube);
             console.log(imgYoutube);
 
 
@@ -188,9 +174,6 @@ $(function () {
             //   thumbYoutube: thumbYoutube,
             // });
           });
-          //appending the items
-          // videoDiv.append(titleYoutube, descriptionYoutube, thumbYoutube);
-          // movieList.prepend(videoDiv);
         }
       )
     })
@@ -200,12 +183,11 @@ $(function () {
       e.stopPropagation();
       // confirm('Do you want to delete this movie?');
       alert('Do you want to delete this movie?')
-      let id = e.target.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
+      let id = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
       // console.log(id);
       // console.log(db.collection('movies').doc(id));
       db.collection('movies').doc(id).delete();
-      db.collection('movie-Youtube').doc(id).delete();
-      // console.log(db.collection('movie-Youtube').doc(id));
+    //   db.collection('movie-Youtube').doc(id).delete();
     });
   }
 
