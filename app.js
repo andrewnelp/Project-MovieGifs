@@ -14,6 +14,7 @@ $(function () {
     e.preventDefault();
     $("#allmovie-list").css('height', '500px');
     $("#allmovie-list").css('overflow', 'auto');
+    $('#all-movies-row').css('display', 'block');
     let getUrl = "https://www.omdbapi.com/?s=" + searchText + "&apikey=13a937dc&type=movie"
     // Creating an AJAX call for search movie button being clicked
     $.ajax({
@@ -50,8 +51,9 @@ $(function () {
   $("#submit").on("click", (e) => {
     e.preventDefault();
     $('.jumbotron').hide();
-    $("#movie-list").css('height', '500px');
-    $("#movie-list").css('overflow', 'auto');
+    // $("#movie-list").css('height', '500px');
+    // $("#movie-list").css('overflow', 'auto');
+    $(".movie-list").css("display", "block");
 
     // This line grabs the input from the textbox
     let movie = form.val().trim();
