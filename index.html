@@ -10,100 +10,389 @@
   <meta name="viewport" content="width = device-width, initial-scale = 1">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <!-- // firebase reference -->
   <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
 
 
-<style>
-  body {
+  <style>
+    body {
 
       background-image: url(https://cdn.wallpapersafari.com/10/48/sfWn4h.jpg);
       margin: 30px;
     }
 
-  thead {
-    text-align: center;
-  }
+    thead {
+      text-align: center;
+    }
 
-  #employee-table th,
-  td {
+    #employee-table th,
+    td {
 
-    display: inline-block;
-    width: 16.575%;
-  }
+      display: inline-block;
+      width: 16.575%;
+    }
 
-  .jumbotron {
-    padding-bottom: 30px;
-    border: 7px solid blue;
-    opacity: 0.9;
-    margin: -10px;
-    margin-bottom: 25px;
-    padding: 20px;
-    background-color: #ebebeb;
-    text-align: center;
-    font-size: 15px;
-    color: white;
-    height: 180px;
-  }
+    .jumbotron {
+      padding-bottom: 30px;
+      border: 7px solid blue;
+      opacity: 0.9;
+      margin: -10px;
+      margin-bottom: 25px;
+      padding: 20px;
+      background-color: #ebebeb;
+      text-align: center;
+      font-size: 15px;
+      color: white;
+      height: 180px;
+    }
 
-  .card-body {
-    border: 7px solid blue;
-    padding: 20px;
-  }
+    .card-body {
+      border: 7px solid blue;
+      padding: 20px;
+    }
 
-  .row {
+    .row {
 
-    margin: 0px;
-    padding: 0px;
-  }
+      margin: 0px;
+      padding: 0px;
+    }
 
-  .card-header {
-    font-size: 22px;
-    text-align: center;
-    background-color: blue;
-    color: white;
+    .card-header {
+      font-size: 22px;
+      text-align: center;
+      background-color: blue;
+      color: white;
 
-  }
+    }
 
-  #movie-list {
-    padding-left: 50px;
-    padding-top: 30px;
-  }
+    #movie-list {
+      padding-left: 50px;
+      padding-top: 30px;
+    }
 
-  h4:hover {
-    opacity: 0.5;
-  }
+    h4:hover {
+      opacity: 0.5;
+    }
 
-  .well img{
-  width:90%;
-  height: 230px;
-  max-height: 230px;
-}
-/* @media(min-width:960px){ */
-  /* .well .s3 {
+    .well img {
+      width: 90%;
+      height: 230px;
+      max-height: 230px;
+    }
+
+    /* @media(min-width:960px){ */
+    /* .well .s3 {
     height: 350px;
   } */
 
-/* } */
-.truncated { 
-  display:block; 
-  max-width:220px; 
-  overflow:hidden; 
-  text-overflow:ellipsis; 
-  white-space:nowrap; 
-}
+    /* } */
+    .truncated {
+      display: block;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
-#all-movies-row {
-  display: none;
-}
+    #all-movies-row {
+      display: none;
 
-</style>
+    }
+
+    /* LOGIN AND REGISTER */
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* Full-width input fields */
+    input[type=text],
+    input[type=password] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    /* Set a style for all buttons */
+    button {
+      background-color: blue;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 55%;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    /* Extra styles for the cancel button */
+    .cancelbtn {
+      width: auto;
+      padding: 10px 18px;
+      background-color: #f44336;
+    }
+
+    /* Center the image and position the close button */
+    .imgcontainer {
+      text-align: center;
+      margin: 24px 0 12px 0;
+      position: relative;
+    }
+
+    img.avatar {
+      width: 7%;
+      border-radius: 50%;
+    }
+
+    .container {
+      padding: 16px;
+    }
+
+    span.psw {
+      float: right;
+      padding-top: 16px;
+    }
+
+    /* The Modal (background) */
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+      padding-top: 60px;
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto 15% auto;
+      /* 5% from the top, 15% from the bottom and centered */
+      border: 1px solid #888;
+      width: 80%;
+      /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button (x) */
+    .close {
+      position: absolute;
+      right: 25px;
+      top: 0;
+      color: #000;
+      font-size: 35px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: red;
+      cursor: pointer;
+    }
+
+    /* Add Zoom Animation */
+    .animate {
+      -webkit-animation: animatezoom 0.6s;
+      animation: animatezoom 0.6s
+    }
+
+    @-webkit-keyframes animatezoom {
+      from {
+        -webkit-transform: scale(0)
+      }
+
+      to {
+        -webkit-transform: scale(1)
+      }
+    }
+
+    @keyframes animatezoom {
+      from {
+        transform: scale(0)
+      }
+
+      to {
+        transform: scale(1)
+      }
+    }
+
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+      span.psw {
+        display: block;
+        float: none;
+      }
+
+      .cancelbtn {
+        width: 100%;
+      }
+    }
+
+    /* register */
+
+
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Full-width input fields */
+    input[type=text],
+    input[type=password] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      display: inline-block;
+      border: none;
+      background: #f1f1f1;
+    }
+
+    input[type=text]:focus,
+    input[type=password]:focus {
+      background-color: #ddd;
+      outline: none;
+    }
+
+    /* Overwrite default styles of hr */
+    hr {
+      border: 1px solid #f1f1f1;
+      margin-bottom: 25px;
+    }
+
+    /* Set a style for the submit button */
+    .registerbtn {
+      background-color: blue;
+      color: white;
+      padding: 16px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      opacity: 0.9;
+    }
+
+    .registerbtn {
+      width: 25%;
+      opacity: 1;
+    }
+
+    /* Add a blue text color to links */
+    a {
+      color: dodgerblue;
+    }
+
+    /* Set a grey background color and center the text of the "sign in" section */
+    .signin {
+      background-color: #f1f1f1;
+      text-align: center;
+    }
+
+    .log {
+      float: right;
+    }
+  </style>
 </head>
 
 <body>
+
+  <!-- REGISTRATION -->
+  <div class="log">
+
+    <!-- register -->
+    <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sign up</button>
+    <div id="id02" class="modal">
+
+      <form class="modal-content animate" action="/action_page.php">
+        <div class="imgcontainer">
+          <span onclick="document.getElementById('id02').style.display='none'" class="close"
+            title="Close Modal">&times;</span>
+            <!-- <i class="fas fa-user-tie"></i> -->
+          <img src="https://ciberculturaenred.files.wordpress.com/2014/10/avatar-facebook-defecto1xxv.jpg" alt="Avatar" class="avatar">
+        </div>
+
+        <form action="/action_page.php">
+          <div class="container">
+            <h1>Sign up</h1>
+            <p>Please fill in this form to create an account.</p>
+            <hr>
+
+            <label for="email"><b>Username</b></label>
+            <input type="text" id="username-input" placeholder="Enter Email" name="email" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" id="password-input" placeholder="Enter Password" name="psw" required>
+
+            <label for="psw-repeat"><b>Repeat Password</b></label>
+            <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+            <hr>
+
+
+            <button class="btn btn-default" id="add-user" type="submit">Sign up</button>
+          </div>
+
+          <div class="container signin">
+            <p>Already have an account? <a href="#login">Sign in</a>.</p>
+          </div>
+        </form>
+      </form>
+    </div>
+
+    <!-- log in -->
+
+
+    <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign in</button>
+
+    <div id="id01" class="modal">
+
+      <form class="modal-content animate" action="/action_page.php">
+        <div class="imgcontainer">
+          <span onclick="document.getElementById('id01').style.display='none'" class="close"
+            title="Close Modal">&times;</span>
+          <img src="https://ciberculturaenred.files.wordpress.com/2014/10/avatar-facebook-defecto1xxv.jpg" alt="Avatar"
+            class="avatar">
+        </div>
+
+        <div class="container">
+          <label for="uname"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" name="uname" required>
+
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" required>
+
+          <button type="submit" id="signin">Sign in</button>
+
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+          <button type="button" onclick="document.getElementById('id01').style.display='none'"
+            class="cancelbtn">Cancel</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+  </div>
+
 
   <!-- Employee Tracker -->
   <div class="container">
@@ -130,8 +419,9 @@
                   <button class="btn btn-primary float-right" id="submit" type="submit"><strong>Movie
                       Search</strong></button>
 
-                      <!-- button for ALL MOVIES -->
-                  <button class="btn btn-primary float-right" id="submitAll" type="submit"><strong>All Movies</strong></button>
+                  <!-- button for ALL MOVIES -->
+                  <button class="btn btn-primary float-right" id="submitAll" type="submit"><strong>All
+                      Movies</strong></button>
               </thead>
               <tbody>
               </tbody>
@@ -145,22 +435,22 @@
     <div class="row" id='all-movies-row'>
       <div class="card mb-4">
         <div class="card-header"><strong>All Movies</strong></div>
-        <div class="card-body" >
+        <div class="card-body">
           <div class="row" id="allmovie-list"></div>
         </div>
       </div>
     </div>
-    
-    </div>
-    <!-- Entry Form -->
-    <div class="container movie-list">
+
+  </div>
+  <!-- Entry Form -->
+  <div class="container movie-list">
     <div class="row movies">
-        <div class="card mb-4">
-          <div class="card-header"><strong>Current Movies</strong></div>
-          <div class="card-body" id="movie-list"></div>
-        </div>
+      <div class="card mb-4">
+        <div class="card-header"><strong>Current Movies</strong></div>
+        <div class="card-body" id="movie-list"></div>
+      </div>
     </div>
-    </div>
+  </div>
 
   </div>
 
