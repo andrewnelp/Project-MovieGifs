@@ -4,8 +4,45 @@ $(function () {
   let form = $("#movie-search");
   // let movieList = $("#movie-list");
   let movieList = document.getElementById('movie-list');
-  // let gif = $('<img>')
+  let movieListAll = document.getElementById('allmovie-list');
   
+  
+  // ALL MOVIES ON SUBMIT
+  // ON SUBMIT BUTTON ALL MOVIES
+  $("#submitAll").on('click', function (e) {
+    let searchText = form.val().trim();
+    e.preventDefault();
+    let getUrl = "https://www.omdbapi.com/?s=" + searchText + "&apikey=13a937dc&type=movie"
+    // Creating an AJAX call for search movie button being clicked
+    $.ajax({
+      url: getUrl,
+      method: "GET"
+    }).then(function (response) {
+      console.log(response);
+      let movies = response.Search;
+      let output = '';
+      $.each(movies, (index, movie) => {
+        output += `
+            <div class=" card well center-align col s3">
+              <img src="${movie.Poster}">
+              <h6 class="truncated">${movie.Title}</h6>
+            <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn btn-primary">IMDB</a>
+            <hr>
+            </div>
+        `;
+      });
+
+      $(movieListAll).html(output);
+    })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  function movieSelected(id) {
+    sessionStorage.setItem('movieId', id);
+    window.location = 'movie.html';
+    return false;
+  }
 
   // Grabs user input from the form on submit and
   $("#submit").on("click", (e) => {
@@ -15,7 +52,7 @@ $(function () {
     // movie+= "movie";
     // console.log(movie);
     //url for movies
-    let queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=13a937dc";
+    let queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=13a937dc&type=movie&plot=full";
 
 
     // Creating an AJAX call for search movie button being clicked
@@ -24,7 +61,7 @@ $(function () {
       method: "GET"
     }).then(function (response) {
       // console.log(queryURL);
-      // console.log(response);
+      console.log(response);
 
       // grabbing and storing data in vars from response:
 
@@ -52,9 +89,10 @@ $(function () {
 
   })
 
+ 
   //rendering movies
   function renderMovie(doc) {
-    let title = $("<p class='z-depth-2'>");
+    let title = $("<h4 class='z-depth-4'>");
     let year = $("<p>");
     let runtime = $("<p>");
     let actors = $("<p>");
@@ -62,33 +100,32 @@ $(function () {
     let websitePlace = $("<p>");
     let websiteLink = $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
     websitePlace.append(websiteLink);
-    let buttonGifs = $('<button type="button" class="btn btn-info showGifs mb-2">  </button>');
-    let buttonvVid = $('<button type="button" class="btn btn-primary showVid">  </button>');
+    let buttonGifs = $('<button type="button" class="btn btn-info mb-2">  </button> <hr>');
+    let buttonvVid = $('<button type="button" class="btn btn-primary">  </button> <hr>');
 
     let cross = $("<p>");
     let imagePlace = $("<img height='250'>");
 
     
     //appending all the elements
-    let ulInfo = $('<div>').append(
-      title.text(doc.data().title),
-      year.text(doc.data().year),
-      runtime.text(doc.data().runtime),
+    let ulInfo = $('<div class="card center-align">').append(
+      title.html('<strong>' + doc.data().title + '</strong>'),
+      year.text('Release Year: ' + doc.data().year),
+      runtime.text('Duration: ' + doc.data().runtime),
       websitePlace.append(websiteLink),
-      actors.text(doc.data().actors),
-      imagePlace.attr("src", doc.data().image),
-      plot.text(doc.data().plot),
-      
+      actors.text('Actors: ' + doc.data().actors),
+      imagePlace.attr("src", doc.data().image).css('width', '180px'),
+      plot.text('Plot: ' + doc.data().plot),
       buttonGifs.text('Show Gifs'),
       buttonvVid.text('Video List'),
-      cross.html('<i class="far fa-trash-alt"></i>')
+      cross.html('<p>Delete Movie  <i class="far fa-trash-alt"></i></p>')
     );
     buttonGifs.attr('data-name', doc.data().title)
     buttonvVid.attr('data-name', doc.data().title)
     let movieRow = $("<div class='row mb-2'>")
     let colOne = $('<div class="col s4">');
-    let colTwo = $('<div class="col s4 second">');
-    let colThree = $('<div class="col s4">')
+    let colTwo = $('<div class="col s4 card">');
+    let colThree = $('<div class="col s4 card">')
     let gifDiv = $("<div>");
     let videoDiv = $("<div>");
     
@@ -101,17 +138,19 @@ $(function () {
     
     //showing gifs
     buttonGifs.on('click', function(event){
-      event.stopPropagation();
+      event.preventDefault();
       //url for gifs
       let movieGif = $(this).attr("data-name");
-      let queryURLgifs = "http://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=7";
+      let queryURLgifs = "http://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=12";
 
       $.ajax({
         url: queryURLgifs,
         method: "GET"
       }).then(function (resp) {
+        console.log(queryURLgifs);
+        console.log(resp);
         for (let i = 0; i < resp.data.length; i++) {
-          let imgGif = $('<img>')
+          let imgGif = $('<img>').css('width', '170px')
           imgGif.attr('src', resp.data[i].images.preview_gif.url);
           imgGif.attr('id', resp.data[i].id);
           gifDiv.append(imgGif);
@@ -134,6 +173,7 @@ $(function () {
           key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'
         },
         
+        
         function (data) {
          
           console.log(data);
@@ -147,10 +187,14 @@ $(function () {
             let thumbYoutube = item.snippet.thumbnails.default.url;
             // console.log(thumbYoutube);
             let titleY = $("<div>").append(titleYoutube);
-            let vidId = $("<div>").append("YouTube Video ID: " + videoId);
-            let descrY = $("<div>").append(descriptionYoutube);
-            let imgYoutube = $("<img>").attr("src", thumbYoutube).attr('video-id', videoId);
-            videoDiv.append(titleY,vidId, imgYoutube);
+            // let vidId = $("<div>").append("YouTube Video ID: " + videoId);
+            $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
+            let vidIdlink = $("<a target='_blank'>").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).text('Watch on Youtube');
+            let vidID = $("<div>");
+            vidID.append(vidIdlink);
+            // let descrY = $("<div>").append(descriptionYoutube);
+            let imgYoutube = $("<img>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
+            videoDiv.append(titleY,vidID, imgYoutube);
             console.log(imgYoutube);
           });
         }
@@ -162,11 +206,12 @@ $(function () {
       e.stopPropagation();
       // confirm('Do you want to delete this movie?');
       alert('Do you want to delete this movie?')
-      let id = e.target.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
+      let id = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
       // console.log(id);
       // console.log(db.collection('movies').doc(id));
       db.collection('movies').doc(id).delete();
       db.collection('movie-Youtube').doc(id).delete();
+    //   db.collection('movie-Youtube').doc(id).delete();
     });
   }
 
