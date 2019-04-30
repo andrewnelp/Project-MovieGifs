@@ -1,12 +1,11 @@
 $(function () {
 
-  let element = document.querySelector('all-movies-row')
   let form = $("#movie-search");
   // let movieList = $("#movie-list");
   let movieList = document.getElementById('movie-list');
   let movieListAll = document.getElementById('allmovie-list');
-  
-  
+
+
   // ALL MOVIES ON SUBMIT
   // ON SUBMIT BUTTON ALL MOVIES
   $("#submitAll").on('click', function (e) {
@@ -98,7 +97,7 @@ $(function () {
 
   })
 
- 
+
   //rendering movies
   function renderMovie(doc) {
     let title = $("<h4 class='z-depth-4'>");
@@ -115,7 +114,7 @@ $(function () {
     let cross = $("<p>");
     let imagePlace = $("<img class='responsive-img' max-height='250'>");
 
-    
+
     //appending all the elements
     let ulInfo = $('<div class="card center-align">').append(
       title.html('<strong>' + doc.data().title + '</strong>'),
@@ -137,16 +136,16 @@ $(function () {
     let colThree = $('<div class="col s4 card">')
     let gifDiv = $("<div class='center-align'>");
     let videoDiv = $("<div class='center-align'>");
-    
+
     movieRow = movieRow.attr('data-id', doc.id);
     colOne.append(ulInfo);
     colTwo.append(gifDiv);
     colThree.append(videoDiv);
     movieRow.append(colOne, colTwo, colThree);
     movieRow.prependTo(movieList);
-    
+
     //showing gifs
-    buttonGifs.on('click', function(event){
+    buttonGifs.on('click', function (event) {
       event.preventDefault();
       //url for gifs
       let movieGif = $(this).attr("data-name");
@@ -165,7 +164,7 @@ $(function () {
           gifDiv.append(imgGif);
         }
       })
-    
+
     })
 
     // showing videos from youtube
@@ -181,10 +180,10 @@ $(function () {
           type: 'videos',
           key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'
         },
-        
-        
+
+
         function (data) {
-         
+
           console.log(data);
 
           $.each(data.items, function (i, item) {
@@ -203,7 +202,7 @@ $(function () {
             vidID.append(vidIdlink);
             // let descrY = $("<div>").append(descriptionYoutube);
             let imgYoutube = $("<img class='responsive-img'>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
-            videoDiv.append(titleY,vidID, imgYoutube);
+            videoDiv.append(titleY, vidID, imgYoutube);
             console.log(imgYoutube);
           });
         }
@@ -220,7 +219,7 @@ $(function () {
       // console.log(db.collection('movies').doc(id));
       db.collection('movies').doc(id).delete();
       db.collection('movie-Youtube').doc(id).delete();
-    //   db.collection('movie-Youtube').doc(id).delete();
+      //   db.collection('movie-Youtube').doc(id).delete();
     });
   }
 
@@ -241,11 +240,11 @@ $(function () {
     });
   })
 
-  form.on('focus', function(){
-    $(this).animate({
-      width: '60%',
-    },800)
-  })
+  // form.on('focus', function () {
+  //   $(this).animate({
+  //     opacity: '0.1',
+  //   }, 800)
+  // })
 
 });
 
