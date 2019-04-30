@@ -12,6 +12,7 @@ $(function () {
   $("#submitAll").on('click', function (e) {
     let searchText = form.val().trim();
     e.preventDefault();
+    $('.jumbotron').hide();
     let getUrl = "https://www.omdbapi.com/?s=" + searchText + "&apikey=13a937dc&type=movie"
     // Creating an AJAX call for search movie button being clicked
     $.ajax({
@@ -24,7 +25,7 @@ $(function () {
       $.each(movies, (index, movie) => {
         output += `
             <div class=" card well center-align col s3">
-              <img src="${movie.Poster}">
+              <img class='responsive-img' src="${movie.Poster}">
               <h6 class="truncated">${movie.Title}</h6>
             <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn btn-primary">IMDB</a>
             <hr>
@@ -47,6 +48,8 @@ $(function () {
   // Grabs user input from the form on submit and
   $("#submit").on("click", (e) => {
     e.preventDefault();
+    $('.jumbotron').hide();
+
     // This line grabs the input from the textbox
     let movie = form.val().trim();
     // movie+= "movie";
@@ -104,7 +107,7 @@ $(function () {
     let buttonvVid = $('<button type="button" class="btn btn-primary">  </button> <hr>');
 
     let cross = $("<p>");
-    let imagePlace = $("<img height='250'>");
+    let imagePlace = $("<img class='responsive-img' max-height='250'>");
 
     
     //appending all the elements
@@ -126,8 +129,8 @@ $(function () {
     let colOne = $('<div class="col s4">');
     let colTwo = $('<div class="col s4 card">');
     let colThree = $('<div class="col s4 card">')
-    let gifDiv = $("<div>");
-    let videoDiv = $("<div>");
+    let gifDiv = $("<div class='center-align'>");
+    let videoDiv = $("<div class='center-align'>");
     
     movieRow = movieRow.attr('data-id', doc.id);
     colOne.append(ulInfo);
@@ -150,7 +153,7 @@ $(function () {
         console.log(queryURLgifs);
         console.log(resp);
         for (let i = 0; i < resp.data.length; i++) {
-          let imgGif = $('<img>').css('width', '170px')
+          let imgGif = $("<img class='responsive-img'>").css('width', '170px')
           imgGif.attr('src', resp.data[i].images.preview_gif.url);
           imgGif.attr('id', resp.data[i].id);
           gifDiv.append(imgGif);
@@ -193,7 +196,7 @@ $(function () {
             let vidID = $("<div>");
             vidID.append(vidIdlink);
             // let descrY = $("<div>").append(descriptionYoutube);
-            let imgYoutube = $("<img>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
+            let imgYoutube = $("<img class='responsive-img'>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
             videoDiv.append(titleY,vidID, imgYoutube);
             console.log(imgYoutube);
           });
