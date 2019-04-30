@@ -4,9 +4,45 @@ $(function () {
   let form = $("#movie-search");
   // let movieList = $("#movie-list");
   let movieList = document.getElementById('movie-list');
-  // let gif = $('<img>')
+  let movieListAll = document.getElementById('allmovie-list');
   
   
+  // ALL MOVIES ON SUBMIT
+  // ON SUBMIT BUTTON ALL MOVIES
+  $("#submitAll").on('click', function (e) {
+    let searchText = form.val().trim();
+    e.preventDefault();
+    let getUrl = "https://www.omdbapi.com/?s=" + searchText + "&apikey=13a937dc&type=movie"
+    // Creating an AJAX call for search movie button being clicked
+    $.ajax({
+      url: getUrl,
+      method: "GET"
+    }).then(function (response) {
+      console.log(response);
+      let movies = response.Search;
+      let output = '';
+      $.each(movies, (index, movie) => {
+        output += `
+            <div class=" card well center-align col s3">
+              <img src="${movie.Poster}">
+              <h6 class="truncated">${movie.Title}</h6>
+            <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn btn-primary">IMDB</a>
+            <hr>
+            </div>
+        `;
+      });
+
+      $(movieListAll).html(output);
+    })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  function movieSelected(id) {
+    sessionStorage.setItem('movieId', id);
+    window.location = 'movie.html';
+    return false;
+  }
 
   // Grabs user input from the form on submit and
   $("#submit").on("click", (e) => {
@@ -16,7 +52,7 @@ $(function () {
     // movie+= "movie";
     // console.log(movie);
     //url for movies
-    let queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=13a937dc";
+    let queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=13a937dc&type=movie&plot=full";
 
      
    
@@ -27,7 +63,7 @@ $(function () {
       method: "GET"
     }).then(function (response) {
       // console.log(queryURL);
-      // console.log(response);
+      console.log(response);
 
       // grabbing and storing data in vars from response:
 
@@ -60,7 +96,7 @@ $(function () {
  
   //rendering movies
   function renderMovie(doc) {
-    let title = $("<h4 class='z-depth-2'>");
+    let title = $("<h4 class='z-depth-4'>");
     let year = $("<p>");
     let runtime = $("<p>");
     let actors = $("<p>");
@@ -68,15 +104,15 @@ $(function () {
     let websitePlace = $("<p>");
     let websiteLink = $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
     websitePlace.append(websiteLink);
-    let buttonGifs = $('<button type="button" class="btn btn-info mb-2">  </button>');
-    let buttonvVid = $('<button type="button" class="btn btn-primary">  </button>');
+    let buttonGifs = $('<button type="button" class="btn btn-info mb-2">  </button> <hr>');
+    let buttonvVid = $('<button type="button" class="btn btn-primary">  </button> <hr>');
 
     let cross = $("<p>");
     let imagePlace = $("<img height='250'>");
 
     
     //appending all the elements
-    let ulInfo = $('<div>').append(
+    let ulInfo = $('<div class="card center-align">').append(
       title.html('<strong>' + doc.data().title + '</strong>'),
       year.text('Release Year: ' + doc.data().year),
       runtime.text('Duration: ' + doc.data().runtime),
@@ -92,8 +128,8 @@ $(function () {
     buttonvVid.attr('data-name', doc.data().title)
     let movieRow = $("<div class='row mb-2'>")
     let colOne = $('<div class="col s4">');
-    let colTwo = $('<div class="col s4 second">');
-    let colThree = $('<div class="col s4">')
+    let colTwo = $('<div class="col s4 card">');
+    let colThree = $('<div class="col s4 card">')
     let gifDiv = $("<div>");
     let videoDiv = $("<div>");
     
@@ -109,7 +145,7 @@ $(function () {
       event.preventDefault();
       //url for gifs
       let movieGif = $(this).attr("data-name");
-      let queryURLgifs = "http://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=10";
+      let queryURLgifs = "http://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=12";
 
       $.ajax({
         url: queryURLgifs,
@@ -161,7 +197,7 @@ $(function () {
             let vidIdlink = $("<a target='_blank'>").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).text('Watch on Youtube');
             let vidID = $("<div>");
             vidID.append(vidIdlink);
-            let descrY = $("<div>").append(descriptionYoutube);
+            // let descrY = $("<div>").append(descriptionYoutube);
             let imgYoutube = $("<img>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
             videoDiv.append(titleY,vidID, imgYoutube);
             console.log(imgYoutube);
