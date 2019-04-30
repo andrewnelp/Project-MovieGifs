@@ -6,7 +6,6 @@ $(function () {
   let movieList = document.getElementById('movie-list');
   // let gif = $('<img>')
   
-  
 
   // Grabs user input from the form on submit and
   $("#submit").on("click", (e) => {
@@ -18,8 +17,6 @@ $(function () {
     //url for movies
     let queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=13a937dc";
 
-     
-   
 
     // Creating an AJAX call for search movie button being clicked
     $.ajax({
@@ -39,9 +36,6 @@ $(function () {
       let imageUrl = response.Poster;
       let website = response.Website;
 
-
-      // console.log(plot);
-
       //storing values in Database
       db.collection('movies').add({
         title: title,
@@ -58,19 +52,6 @@ $(function () {
 
   })
 
-  //renderin yourube thumbs
-  // function renderYoutube(doc) {
-  //   let videoDiv = $("<div>").attr('data-id', doc.id);
-  //   let titleYoutube = $("<li>");
-  //   let descriptionYoutube = $("<li>");
-  //   let thumbYoutube = $("<img>").attr("src", doc.data().thumbYoutube);
-  //   // console.log(titleYoutube);
-
-  //   //appending the items
-  //   videoDiv.append(titleYoutube, descriptionYoutube,thumbYoutube);
-  //   movieList.prepend(videoDiv);
-  // }
- 
   //rendering movies
   function renderMovie(doc) {
     let title = $("<p class='z-depth-2'>");
@@ -129,8 +110,6 @@ $(function () {
         url: queryURLgifs,
         method: "GET"
       }).then(function (resp) {
-        // console.log(queryURLgifs);
-        // console.log(resp);
         for (let i = 0; i < resp.data.length; i++) {
           let imgGif = $('<img>')
           imgGif.attr('src', resp.data[i].images.preview_gif.url);
@@ -149,17 +128,11 @@ $(function () {
       //  Creating an $.get call from youtube api
       $.get(
         "https://www.googleapis.com/youtube/v3/search", {
-        
           part: 'snippet, id',
           q: videos,
           type: 'videos',
           key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'
         },
-        // "https://www.googleapis.com/youtube/v3/videos", {
-        //   part: "snippet",
-        //   chart: "mostPopular",
-        //   // key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'
-        // },
         
         function (data) {
          
@@ -179,18 +152,7 @@ $(function () {
             let imgYoutube = $("<img>").attr("src", thumbYoutube).attr('video-id', videoId);
             videoDiv.append(titleY,vidId, imgYoutube);
             console.log(imgYoutube);
-
-
-            //storing values in Database
-            // db.collection('movie-Youtube').add({
-            //   titleYoutube: titleYoutube,
-            //   descriptionYoutube: descriptionYoutube,
-            //   thumbYoutube: thumbYoutube,
-            // });
           });
-          //appending the items
-          // videoDiv.append(titleYoutube, descriptionYoutube, thumbYoutube);
-          // movieList.prepend(videoDiv);
         }
       )
     })
@@ -205,7 +167,6 @@ $(function () {
       // console.log(db.collection('movies').doc(id));
       db.collection('movies').doc(id).delete();
       db.collection('movie-Youtube').doc(id).delete();
-      // console.log(db.collection('movie-Youtube').doc(id));
     });
   }
 
@@ -225,38 +186,12 @@ $(function () {
       }
     });
   })
-  // real-time listener for youtube
-  // db.collection('movie-Youtube').onSnapshot(snapshot => {
-  //   let changes = snapshot.docChanges();
-  //   // console.log(changes);
-  //   changes.forEach(change => {
-  //     // console.log(change.doc.data());
-  //     if (change.type == 'added') {
-  //       renderYoutube(change.doc);
-  //     } else if (change.type == 'removed') {
-  //       //finding the div with attr
-  //       let divRemove = movieList.querySelector('[data-id=' + change.doc.id + ']');
-  //       // console.log(divRemove)
-  //       movieList.removeChild(divRemove);
-  //     }
-  //   });
-  // })
 
   form.on('focus', function(){
     $(this).animate({
       width: '60%',
     },800)
   })
-  //function to removing some particular gif
-  // let gif = $('<img>')
-  // gif.on('click', function(){
-    
-  //   for (let j=0; j<gif.length; j++) {
-  //     alert('gif clicked');
-  //     $(this).remove();
-  //   }
-    
-  // })
 
 });
 
