@@ -1,6 +1,6 @@
 $(function () {
 
-  // let movies = [];
+  let element = document.querySelector('all-movies-row')
   let form = $("#movie-search");
   // let movieList = $("#movie-list");
   let movieList = document.getElementById('movie-list');
@@ -12,7 +12,8 @@ $(function () {
   $("#submitAll").on('click', function (e) {
     let searchText = form.val().trim();
     e.preventDefault();
-    $('.jumbotron').hide();
+    $("#allmovie-list").css('height', '500px');
+    $("#allmovie-list").css('overflow', 'auto');
     let getUrl = "https://www.omdbapi.com/?s=" + searchText + "&apikey=13a937dc&type=movie"
     // Creating an AJAX call for search movie button being clicked
     $.ajax({
@@ -39,16 +40,18 @@ $(function () {
         console.log(err);
       });
   });
-  function movieSelected(id) {
-    sessionStorage.setItem('movieId', id);
-    window.location = 'movie.html';
-    return false;
-  }
+  // function movieSelected(id) {
+  //   sessionStorage.setItem('movieId', id);
+  //   window.location = 'movie.html';
+  //   return false;
+  // }
 
   // Grabs user input from the form on submit and
   $("#submit").on("click", (e) => {
     e.preventDefault();
     $('.jumbotron').hide();
+    $("#movie-list").css('height', '500px');
+    $("#movie-list").css('overflow', 'auto');
 
     // This line grabs the input from the textbox
     let movie = form.val().trim();
