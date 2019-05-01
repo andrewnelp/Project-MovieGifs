@@ -16,19 +16,23 @@ $(function () {
     $('#all-movies-row').css('display', 'block');
     $('.jumbotron').hide(400);
     let getUrl = "https://www.omdbapi.com/?s=" + searchText + "&apikey=13a937dc&type=movie"
+    // let getUrl = "https://api.themoviedb.org/3/search/movie?api_key=ac20e07e841e7f69b85379e4ef17ab6e&include_adult=false&language=en-US&query="+searchText;
     // Creating an AJAX call for search movie button being clicked
     $.ajax({
       url: getUrl,
       method: "GET"
     }).then(function (response) {
       console.log(response);
+      console.log(getUrl);
       let movies = response.Search;
+      console.log(movies);
       let output = '';
       $.each(movies, (index, movie) => {
         output += `
             <div class=" card well center-align col s3">
               <img class='responsive-img' src="${movie.Poster}">
               <h6 class="truncated">${movie.Title}</h6>
+              <p class="truncated">${movie.Year}</p>
             <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn btn-primary">IMDB</a>
             <hr>
             </div>
