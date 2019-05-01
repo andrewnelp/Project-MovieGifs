@@ -5,7 +5,7 @@
       margin: 30px;
     }
 
-    thead {
+    /* thead {
       text-align: center;
     }
 
@@ -14,7 +14,7 @@
 
       display: inline-block;
       width: 16.575%;
-    }
+    } */
 
     .jumbotron {
       padding-bottom: 30px;
@@ -58,11 +58,11 @@
       opacity: 0.5;
     }
 
-    .well img {
+    /* .well img {
       width: 90%;
       height: 230px;
       max-height: 230px;
-    }
+    } */
 
     /* @media(min-width:960px){ */
     /* .well .s3 {
@@ -80,7 +80,10 @@
 
     #all-movies-row {
       display: none;
+    }
 
+    #allmovie-list img {
+      max-height: 150px;
     }
 
     /* LOGIN AND REGISTER */

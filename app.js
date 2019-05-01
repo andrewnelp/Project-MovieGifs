@@ -29,7 +29,7 @@ $(function () {
       let output = '';
       $.each(movies, (index, movie) => {
         output += `
-            <div class=" card well center-align col s3">
+            <div class="card well center-align col s6 m4 l3">
               <img class='responsive-img' src="${movie.Poster}">
               <h6 class="truncated">${movie.Title}</h6>
               <p class="truncated">${movie.Year}</p>
@@ -135,9 +135,9 @@ $(function () {
     buttonGifs.attr('data-name', doc.data().title)
     buttonvVid.attr('data-name', doc.data().title)
     let movieRow = $("<div class='row mb-2'>")
-    let colOne = $('<div class="col s4">');
-    let colTwo = $('<div class="col s4 card">');
-    let colThree = $('<div class="col s4 card">')
+    let colOne = $('<div class="col s12 m6 l4">');
+    let colTwo = $('<div class="col s12 m6 l4 card">');
+    let colThree = $('<div class="col s12 m6 l4 card">')
     let gifDiv = $("<div class='center-align'>");
     let videoDiv = $("<div class='center-align'>");
 
