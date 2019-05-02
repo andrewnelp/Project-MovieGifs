@@ -50,9 +50,6 @@ $(function () {
   $("#submit").on("click", (e) => {
     e.preventDefault();
     $('.jumbotron').hide();
-    // $("#movie-list").css('height', '500px');
-    // $("#movie-list").css('overflow', 'auto');
-    // $(".movie-list").css("display", "block");
 
     // This line grabs the input from the textbox
     let movie = form.val().trim();
@@ -71,7 +68,6 @@ $(function () {
       console.log(response);
 
       // grabbing and storing data in vars from response:
-
       let title = response.Title;
       let year = response.Year;
       let runtime = response.Runtime;
