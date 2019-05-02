@@ -53,8 +53,6 @@ $(function () {
 
     // This line grabs the input from the textbox
     let movie = form.val().trim();
-    // movie+= "movie";
-    // console.log(movie);
     //url for movies
     let queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=13a937dc&type=movie&plot=full";
 
@@ -196,7 +194,6 @@ $(function () {
             // let videoss = '<iframe width = "100%" height = "auto" src = "https://www.youtube.com/embed/' + videoId + 'frameborder="0" allow="autoplay; encrypted-media; picture-in-picture; gyroscope" allowfullscreen></iframe>';
             // let imgYoutube = $('<div class="collection">').append(videoss);
             videoDiv.append(titleY, vidIdlink, imgYoutube);
-            // console.log(imgYoutube);
           });
         }
       )
@@ -209,7 +206,6 @@ $(function () {
       alert('Do you want to delete this movie?')
       let id = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
       // console.log(id);
-      // console.log(db.collection('movies').doc(id));
       db.collection('movies').doc(id).delete();
       db.collection('movie-Youtube').doc(id).delete();
       //   db.collection('movie-Youtube').doc(id).delete();
