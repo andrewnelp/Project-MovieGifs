@@ -128,8 +128,8 @@ $(function () {
       actors.text('Actors: ' + doc.data().actors),
       imagePlace.attr("src", doc.data().image).css('width', '180px'),
       plot.text('Plot: ' + doc.data().plot),
-      buttonGifs.text('Show Gifs'),
-      buttonvVid.text('Video List'),
+      buttonGifs.text('Gifs'),
+      buttonvVid.text('Video'),
       cross.html('<p>Delete Movie  <i class="far fa-trash-alt"></i></p>')
     );
     buttonGifs.attr('data-name', doc.data().title)
@@ -153,7 +153,7 @@ $(function () {
       event.preventDefault();
       //url for gifs
       let movieGif = $(this).attr("data-name");
-      let queryURLgifs = "http://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=12";
+      let queryURLgifs = "http://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=10";
 
       $.ajax({
         url: queryURLgifs,
@@ -185,29 +185,27 @@ $(function () {
           key: 'AIzaSyDrWhQOWG8TUTL1onkdl83ZQ_m8yaUk3Ug'
         },
 
-
+        //getting data
         function (data) {
-
           console.log(data);
-
           $.each(data.items, function (i, item) {
-            console.log(data);
+            // console.log(data);
             //getting output
             var videoId = item.id.videoId;
             let titleYoutube = item.snippet.title;
-            let descriptionYoutube = item.snippet.description;
             let thumbYoutube = item.snippet.thumbnails.default.url;
             // console.log(thumbYoutube);
             let titleY = $("<div>").append(titleYoutube);
             // let vidId = $("<div>").append("YouTube Video ID: " + videoId);
-            $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
+            // $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
             let vidIdlink = $("<a target='_blank'>").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).text('Watch on Youtube');
             let vidID = $("<div class='card-image'>");
-            vidID.append(vidIdlink);
-            // let descrY = $("<div>").append(descriptionYoutube);
+            // vidID.append(vidIdlink);
             let imgYoutube = $("<img class='responsive-img'>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
-            videoDiv.append(titleY, vidID, imgYoutube);
-            console.log(imgYoutube);
+            // let videoss = '<iframe width = "100%" height = "auto" src = "https://www.youtube.com/embed/' + videoId + 'frameborder="0" allow="autoplay; encrypted-media; picture-in-picture; gyroscope" allowfullscreen></iframe>';
+            // let imgYoutube = $('<div class="collection">').append(videoss);
+            videoDiv.append(titleY, vidIdlink, imgYoutube);
+            // console.log(imgYoutube);
           });
         }
       )
