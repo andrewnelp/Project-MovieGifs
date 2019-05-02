@@ -110,7 +110,7 @@ $(function () {
     let actors = $("<p>");
     let plot = $("<p>");
     let websitePlace = $("<p>");
-    let websiteLink = $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
+    let websiteLink = $("<a target='_blank' class='truncated'>").attr('href', doc.data().website).text(doc.data().website);
     websitePlace.append(websiteLink);
     let buttonGifs = $('<button type="button" class="btn btn-info mb-2">  </button> <hr>');
     let buttonvVid = $('<button type="button" class="btn btn-primary">  </button> <hr>');
@@ -139,7 +139,7 @@ $(function () {
     let colTwo = $('<div class="col s12 m6 l4 card">');
     let colThree = $('<div class="col s12 m6 l4 card">')
     let gifDiv = $("<div class='center-align'>");
-    let videoDiv = $("<div class='center-align'>");
+    let videoDiv = $("<div class='center-align '>");
 
     movieRow = movieRow.attr('data-id', doc.id);
     colOne.append(ulInfo);
@@ -202,7 +202,7 @@ $(function () {
             // let vidId = $("<div>").append("YouTube Video ID: " + videoId);
             $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
             let vidIdlink = $("<a target='_blank'>").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).text('Watch on Youtube');
-            let vidID = $("<div>");
+            let vidID = $("<div class='card-image'>");
             vidID.append(vidIdlink);
             // let descrY = $("<div>").append(descriptionYoutube);
             let imgYoutube = $("<img class='responsive-img'>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
