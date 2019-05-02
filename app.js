@@ -29,7 +29,7 @@ $(function () {
       let output = '';
       $.each(movies, (index, movie) => {
         output += `
-            <div class="card well center-align col s6 m4 l3">
+            <div class="collection well center-align col s6 m4 l3">
               <img class='responsive-img' src="${movie.Poster}">
               <h6 class="truncated">${movie.Title}</h6>
               <p class="truncated">${movie.Year}</p>
@@ -175,7 +175,7 @@ $(function () {
     buttonvVid.on("click", function (e) {
       e.stopPropagation();
       let videos = $(this).attr("data-name");
-      console.log("videos" + videos);
+      // console.log("videos" + videos);
       //  Creating an $.get call from youtube api
       $.get(
         "https://www.googleapis.com/youtube/v3/search", {
