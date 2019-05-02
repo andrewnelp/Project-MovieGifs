@@ -30,10 +30,10 @@ $(function () {
       $.each(movies, (index, movie) => {
         output += `
             <div class="collection well center-align col s6 m4 l3">
-              <img class='responsive-img hoverable' src="${movie.Poster}">
+              <img class='responsive-img hoverable z-depth-1' src="${movie.Poster}">
               <h6 class="truncated">${movie.Title}</h6>
               <p class="truncated">${movie.Year}</p>
-            <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn blue darken-3 waves-effect">IMDB</a>
+            <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn blue darken-3 z-depth-2">IMDB</a>
             <hr>
             </div>
         `;
@@ -45,11 +45,6 @@ $(function () {
         console.log(err);
       });
   });
-  // function movieSelected(id) {
-  //   sessionStorage.setItem('movieId', id);
-  //   window.location = 'movie.html';
-  //   return false;
-  // }
 
   // Grabs user input from the form on submit and
   $("#submit").on("click", (e) => {
@@ -241,13 +236,6 @@ $(function () {
       }
     });
   })
-
-  // form.on('focus', function () {
-  //   $(this).animate({
-  //     opacity: '0.1',
-  //   }, 800)
-  // })
-
 });
 
 
