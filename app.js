@@ -30,10 +30,10 @@ $(function () {
       $.each(movies, (index, movie) => {
         output += `
             <div class="collection well center-align col s6 m4 l3">
-              <img class='responsive-img' src="${movie.Poster}">
+              <img class='responsive-img hoverable' src="${movie.Poster}">
               <h6 class="truncated">${movie.Title}</h6>
               <p class="truncated">${movie.Year}</p>
-            <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn btn-primary">IMDB</a>
+            <a href="http://imdb.com/title/${movie.imdbID}" target="_blank" class="btn blue darken-3 waves-effect">IMDB</a>
             <hr>
             </div>
         `;
@@ -104,19 +104,19 @@ $(function () {
 
   //rendering movies
   function renderMovie(doc) {
-    let title = $("<h4 class='z-depth-4'>");
+    let title = $("<h4 class='flow-text z-depth-4 blue darken-3 white-text'>");
     let year = $("<p>");
     let runtime = $("<p>");
     let actors = $("<p>");
-    let plot = $("<p>");
+    let plot = $("<p class='#'>");
     let websitePlace = $("<p>");
-    let websiteLink = $("<a target='_blank' class='truncated'>").attr('href', doc.data().website).text(doc.data().website);
+    let websiteLink = $("<a target='_blank' class='truncate'>").attr('href', doc.data().website).text(doc.data().website);
     websitePlace.append(websiteLink);
-    let buttonGifs = $('<button type="button" class="btn btn-info mb-2">  </button> <hr>');
-    let buttonvVid = $('<button type="button" class="btn btn-primary">  </button> <hr>');
+    let buttonGifs = $('<button type="button" class=" btn  blue darken-3">  </button> <hr>');
+    let buttonvVid = $('<button type="button" class="btn  blue darken-3">  </button> <hr>');
 
     let cross = $("<p>");
-    let imagePlace = $("<img class='responsive-img' max-height='250'>");
+    let imagePlace = $("<img class='hoverable responsive-img' max-height='250'>");
 
 
     //appending all the elements
@@ -135,8 +135,8 @@ $(function () {
     buttonGifs.attr('data-name', doc.data().title)
     buttonvVid.attr('data-name', doc.data().title)
     let movieRow = $("<div class='row mb-2'>")
-    let colOne = $('<div class="col s12 m6 l4">');
-    let colTwo = $('<div class="col s12 m6 l4 card">');
+    let colOne = $('<div class="col s12 m8 l4 card">');
+    let colTwo = $('<div class="col s12 m4 l4 card">');
     let colThree = $('<div class="col s12 m6 l4 card">')
     let gifDiv = $("<div class='center-align'>");
     let videoDiv = $("<div class='center-align '>");
@@ -162,7 +162,7 @@ $(function () {
         console.log(queryURLgifs);
         console.log(resp);
         for (let i = 0; i < resp.data.length; i++) {
-          let imgGif = $("<img class='responsive-img'>").css('width', '170px')
+          let imgGif = $("<img class='responsive-img hoverable'>").css('width', '170px')
           imgGif.attr('src', resp.data[i].images.preview_gif.url);
           imgGif.attr('id', resp.data[i].id);
           gifDiv.append(imgGif);
@@ -195,13 +195,13 @@ $(function () {
             let titleYoutube = item.snippet.title;
             let thumbYoutube = item.snippet.thumbnails.default.url;
             // console.log(thumbYoutube);
-            let titleY = $("<div>").append(titleYoutube);
+            let titleY = $("<br><div>").append(titleYoutube);
             // let vidId = $("<div>").append("YouTube Video ID: " + videoId);
             // $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
-            let vidIdlink = $("<a target='_blank'>").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).text('Watch on Youtube');
+            let vidIdlink = $("<a target='_blank' >").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).text('Watch on Youtube');
             let vidID = $("<div class='card-image'>");
             // vidID.append(vidIdlink);
-            let imgYoutube = $("<img class='responsive-img'>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
+            let imgYoutube = $("<img class='responsive-img hoverable'>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
             // let videoss = '<iframe width = "100%" height = "auto" src = "https://www.youtube.com/embed/' + videoId + 'frameborder="0" allow="autoplay; encrypted-media; picture-in-picture; gyroscope" allowfullscreen></iframe>';
             // let imgYoutube = $('<div class="collection">').append(videoss);
             videoDiv.append(titleY, vidIdlink, imgYoutube);

@@ -103,7 +103,7 @@
   <!-- Employee Tracker -->
   <div class="container">
     <!-- Jumbotron -->
-    <div class="jumbotron" style="background-color: black; color: white">
+    <div class="jumbotron hide-on-small-only" style="background-color: black; color: white">
       <h4 class="text-center">Search For Your Favorite Movie</h4>
       <h6 class="text-center">...and enjoy gifs</h6>
   </div>
@@ -122,11 +122,11 @@
                   <label for="movie-search"><i class="fas fa-film"></i> Your Movie </label>
                   <input class="form-control" id="movie-search" placeholder="Movie Name" type="text">
                   <div class="col s12 m6">
-                    <button class="btn btn-primary" id="submit" type="submit"><strong>Movie Search</strong></button>
+                    <button class="btn blue darken-3 waves-effect z-depth-3" id="submit" type="submit"><strong>Movie Search</strong></button>
                   </div>
                   <div class="col s12 m6">
                     <!-- button for ALL MOVIES -->
-                    <button class="btn btn-primary" id="submitAll" type="submit"><strong>All Movies</strong></button>
+                    <button class="btn blue darken-3 waves-effect right-align z-depth-3" id="submitAll" type="submit"><strong>All Movies</strong></button>
                   </div>
                   
 
@@ -154,7 +154,7 @@
   <!-- Entry Form -->
   <div class="container movie-list">
     <div class="row movies">
-      <div class="card mb-4">
+      <div class="card">
         <div class="card-header"><strong>Current Movies</strong></div>
         <div class="card-body" id="movie-list"></div>
       </div>
