@@ -93,7 +93,7 @@ $(function () {
 
   //rendering movies
   function renderMovie(doc) {
-    let title = $("<h4 class='flow-text z-depth-4 blue darken-3 white-text'>");
+    let title = $("<h4 class= flow-text z-depth-4 blue darken-3 white-text'>");
     let year = $("<p>");
     let runtime = $("<p>");
     let actors = $("<p>");
@@ -123,7 +123,7 @@ $(function () {
     );
     buttonGifs.attr('data-name', doc.data().title)
     buttonvVid.attr('data-name', doc.data().title)
-    let movieRow = $("<div class='row mb-2'>")
+    let movieRow = $("<div class='row'>")
     let colOne = $('<div class="col s12 m8 l4 card">');
     let colTwo = $('<div class="col s12 m4 l4 card">');
     let colThree = $('<div class="col s12 m6 l4 card">')
