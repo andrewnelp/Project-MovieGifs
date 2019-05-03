@@ -187,7 +187,7 @@ $(function () {
             let titleY = $("<br><div>").append(titleYoutube);
             // let vidId = $("<div>").append("YouTube Video ID: " + videoId);
             // $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
-            let vidIdlink = $("<a target='_blank' >").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).text('Watch on Youtube');
+            let vidIdlink = $("<a target='_blank' >").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).html('Watch on Youtube <i class="material-icons">ondemand_video</i>');
             let vidID = $("<div class='card-image'>");
             // vidID.append(vidIdlink);
             let imgYoutube = $("<img class='responsive-img hoverable'>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
@@ -228,6 +228,8 @@ $(function () {
       }
     });
   })
+
+  
 });
 
 
