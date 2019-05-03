@@ -1,0 +1,93 @@
+body {
+
+      background-image: url(https://cdn.wallpapersafari.com/10/48/sfWn4h.jpg);
+      margin: 30px;
+    }
+
+    thead {
+      text-align: center;
+    }
+
+    #employee-table th,
+    td {
+
+      display: inline-block;
+      width: 16.575%;
+    }
+
+    .jumbotron {
+      padding-bottom: 30px;
+      border: 7px solid blue;
+      opacity: 0.9;
+      margin: -10px;
+      margin-bottom: 25px;
+      padding: 20px;
+      background-color: #ebebeb;
+      text-align: center;
+      font-size: 15px;
+      color: white;
+      height: 180px;
+    }
+
+    .card-body {
+      border: 7px solid blue;
+      padding: 20px;
+    }
+
+    .row {
+
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .card-header {
+      font-size: 22px;
+      text-align: center;
+      background-color: blue;
+      color: white;
+
+    }
+
+    #movie-list {
+      padding-left: 15px;
+      padding-top: 30px;
+    }
+
+    h4:hover {
+      opacity: 0.5;
+    }
+
+    .truncated {
+      display: block;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #all-movies-row {
+      display: none;
+    }
+
+    #allmovie-list img {
+      max-height: 150px;
+    }
+
+
+    #logout-button {
+        display: inline-block;
+        padding: 15px 25px;
+        font-size: 28px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: black;
+        background-color: blue;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px ;
+      }
+      
+      #logout-button:hover {background-color: rgb(110, 117, 221)}
+      

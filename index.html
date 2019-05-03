@@ -8,136 +8,53 @@
 
   <title>Movie with Gifs</title>
   <meta name="viewport" content="width = device-width, initial-scale = 1">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <!-- // firebase reference -->
-  <script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-firestore.js"></script>
-
-
-  <style>
-    body {
-
-      background-image: url(https://cdn.wallpapersafari.com/10/48/sfWn4h.jpg);
-      margin: 30px;
-    }
-
-    thead {
-      text-align: center;
-    }
-
-    #employee-table th,
-    td {
-
-      display: inline-block;
-      width: 16.575%;
-    }
-
-    .jumbotron {
-      padding-bottom: 30px;
-      border: 7px solid blue;
-      opacity: 0.9;
-      margin: -10px;
-      margin-bottom: 25px;
-      padding: 20px;
-      background-color: #ebebeb;
-      text-align: center;
-      font-size: 15px;
-      color: white;
-      height: 180px;
-    }
-
-    .card-body {
-      border: 7px solid blue;
-      padding: 20px;
-    }
-
-    .row {
-
-      margin: 0px;
-      padding: 0px;
-    }
-
-    .card-header {
-      font-size: 22px;
-      text-align: center;
-      background-color: blue;
-      color: white;
-
-    }
-
-    #movie-list {
-      padding-left: 50px;
-      padding-top: 30px;
-    }
-
-    h4:hover {
-      opacity: 0.5;
-    }
-
-    .well img {
-      width: 90%;
-      height: 230px;
-      max-height: 230px;
-    }
-
-    /* @media(min-width:960px){ */
-    /* .well .s3 {
-    height: 350px;
-  } */
-
-    /* } */
-    .truncated {
-      display: block;
-      max-width: 220px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    #all-movies-row {
-      display: none;
-
-    }
-
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <button onclick="mainApp.logOut()">logOut</button>
-  
-  <!-- Employee Tracker -->
+  <!-- log out button -->
+  <a href="login.html" id="logout-button"><button><strong>Sign out</strong></button></a>
+
+  <!--  Tracker -->
   <div class="container">
-
     <!-- Jumbotron -->
-    <div class="jumbotron" style="background-color: black; color: white">
-      <h2 class="text-center">Search For Your Favorite Movie</h2>
-
+    <div class="jumbotron hide-on-small-only" style="background-color: black; color: white">
+      <h4 class="text-center">Search For Your Favorite Movie </h4>
+      <h6 class="text-center"></h6>
+      <img src="https://media1.tenor.com/images/e7dc1ba039f2d71292305aeb6c73f8d6/tenor.gif?itemid=5226448"
+        alt="thanks for watching" width="200" height="80">
     </div>
 
     <div class="row">
 
-      <div class="col-md-12">
+      <div class="col s12">
 
         <!-- Current Employees-->
-        <div class="card mb-4">
-          <div class="card-header"><strong>Add Movie</strong></div>
+        <div class="card">
+          <div class="card-header"><strong>Add Movie </strong></div>
           <div class="card-body">
-            <table class="table table-sm table-hover" id='employee-table'>
+            <table class="table" id='#'>
               <thead>
-                <div class="form-group">
+                <div class="form">
                   <label for="movie-search"><i class="fas fa-film"></i> Your Movie </label>
                   <input class="form-control" id="movie-search" placeholder="Movie Name" type="text">
-                  <button class="btn btn-primary float-right" id="submit" type="submit"><strong>Movie
-                      Search</strong></button>
-
-                  <!-- button for ALL MOVIES -->
-                  <button class="btn btn-primary float-right" id="submitAll" type="submit"><strong>All
-                      Movies</strong></button>
+                  <div class="col s12 m6">
+                    <button class="btn blue darken-3 z-depth-3 " id="submit" type="submit"><strong>Movie</strong>
+                    </button>
+                  </div>
+                  <div class="col s12 m6">
+                    <!-- button for ALL MOVIES -->
+                    <button class="btn blue darken-3 z-depth-3 right-align " id="submitAll" type="submit"><strong>All
+                        Movies </strong> </button>
+                  </div>
               </thead>
               <tbody>
               </tbody>
@@ -161,9 +78,9 @@
   <!-- Entry Form -->
   <div class="container movie-list">
     <div class="row movies">
-      <div class="card mb-4">
+      <div class="card">
         <div class="card-header"><strong>Current Movies</strong></div>
-        <div class="card-body" id="movie-list"></div>
+        <div class="card-content" id="movie-list"></div>
       </div>
     </div>
   </div>
@@ -191,10 +108,8 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <!-- Code to the JavaScript File -->
   <script src="app.js"></script>
-
   <script src="firebase.js"></script>
   <script src="main.js"></script>
-  
 
 </body>
 
