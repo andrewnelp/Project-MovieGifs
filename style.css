@@ -1,5 +1,4 @@
-
-    body {
+body {
 
       background-image: url(https://cdn.wallpapersafari.com/10/48/sfWn4h.jpg);
       margin: 30px;
@@ -74,4 +73,21 @@
       max-height: 150px;
     }
 
-   
+
+    #logout-button {
+        display: inline-block;
+        padding: 15px 25px;
+        font-size: 28px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: black;
+        background-color: blue;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 9px ;
+      }
+      
+      #logout-button:hover {background-color: rgb(110, 117, 221)}
+      

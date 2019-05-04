@@ -19,13 +19,18 @@
 </head>
 
 <body>
-  <button onclick="mainApp.logOut()">logOut</button>
+
+  <!-- log out button -->
+  <a href="login.html" id="logout-button"><button><strong>Sign out</strong></button></a>
+
   <!--  Tracker -->
   <div class="container">
     <!-- Jumbotron -->
     <div class="jumbotron hide-on-small-only" style="background-color: black; color: white">
       <h4 class="text-center">Search For Your Favorite Movie </h4>
-      <h6 class="text-center">...and enjoy gifs</h6>
+      <h6 class="text-center"></h6>
+      <img src="https://media1.tenor.com/images/e7dc1ba039f2d71292305aeb6c73f8d6/tenor.gif?itemid=5226448"
+        alt="thanks for watching" width="200" height="80">
     </div>
 
     <div class="row">
@@ -81,7 +86,7 @@
   </div>
 
   </div>
-  
+
   <script>
     // Initialize Firebase
     var config = {
