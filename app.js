@@ -1,3 +1,6 @@
+
+// log out javascript
+
 document.getElementById('logout-button').addEventListener('click', (event) => {
   event.preventDefault()
 
