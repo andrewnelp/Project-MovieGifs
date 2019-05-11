@@ -159,7 +159,7 @@ $(function () {
       event.preventDefault();
       //url for gifs
       let movieGif = $(this).attr("data-name");
-      let queryURLgifs = "http://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=10";
+      let queryURLgifs = "https://api.giphy.com/v1/gifs/search?q=" + movieGif + "+movie&api_key=Wa2AdCO6cHGtHNULqRHDcKFm4pSgr85Q&limit=10";
 
       $.ajax({
         url: queryURLgifs,
