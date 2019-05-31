@@ -25,7 +25,7 @@ $(function () {
 
   // ALL MOVIES ON SUBMIT
   // ON SUBMIT BUTTON ALL MOVIES
-  $("#submitAll").on('click', function (e) {
+  $("#submitAll").on('click', async (e) => {
     let searchText = form.val().trim();
     e.preventDefault();
     $("#allmovie-list").css('height', '500px');
@@ -35,7 +35,7 @@ $(function () {
     let getUrl = "https://www.omdbapi.com/?s=" + searchText + "&apikey=13a937dc&type=movie"
     // let getUrl = "https://api.themoviedb.org/3/search/movie?api_key=ac20e07e841e7f69b85379e4ef17ab6e&include_adult=false&language=en-US&query="+searchText;
     // Creating an AJAX call for search movie button being clicked
-    $.ajax({
+    await $.ajax({
       url: getUrl,
       method: "GET"
     }).then(function (response) {
