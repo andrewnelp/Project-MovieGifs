@@ -1,4 +1,4 @@
-document.getElementById('logout-button').addEventListener('click', (event) => {
+document.getElementById('logout-button').addEventListener('click', event => {
   event.preventDefault()
 
   const signoutWindow = window.open(
@@ -7,10 +7,8 @@ document.getElementById('logout-button').addEventListener('click', (event) => {
 
   )
 
-
   signoutWindow.close()
   window.location = document.getElementById('logout-button').href
-
 })
 
 
@@ -25,7 +23,7 @@ $(function () {
 
   // ALL MOVIES ON SUBMIT
   // ON SUBMIT BUTTON ALL MOVIES
-  $("#submitAll").on('click', async (e) => {
+  $("#submitAll").on('click', async e => {
     let searchText = form.val().trim();
     e.preventDefault();
     $("#allmovie-list").css('height', '500px');
@@ -33,16 +31,11 @@ $(function () {
     $('#all-movies-row').css('display', 'block');
     $('.jumbotron').hide(400);
     let getUrl = "https://www.omdbapi.com/?s=" + searchText + "&apikey=13a937dc&type=movie"
-    // let getUrl = "https://api.themoviedb.org/3/search/movie?api_key=ac20e07e841e7f69b85379e4ef17ab6e&include_adult=false&language=en-US&query="+searchText;
-    // Creating an AJAX call for search movie button being clicked
     await $.ajax({
       url: getUrl,
       method: "GET"
     }).then(function (response) {
-      console.log(response);
-      console.log(getUrl);
       let movies = response.Search;
-      console.log(movies);
       let output = '';
       $.each(movies, (index, movie) => {
         output += `
@@ -58,13 +51,13 @@ $(function () {
 
       $(movieListAll).html(output);
     })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   });
 
   // Grabs user input from the form on submit and
-  $("#submit").on("click", (e) => {
+  $("#submit").on("click", e => {
     e.preventDefault();
     $('.jumbotron').hide();
 
@@ -73,43 +66,45 @@ $(function () {
     //url for movies
     let queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=13a937dc&type=movie&plot=full";
 
+    //getting movie via async
+    const getMovie = async () => {
+      const response = await fetch (queryURL);
+      if (response.status !== 200) {
+        throw new Error('cannot fetch the data');
+      }
+      const data = await response.json();
+      return data;
+    }
+    getMovie()
+      .then(data => {
+        // grabbing and storing data from response:
+        let title = data.Title;
+        let year = data.Year;
+        let runtime = data.Runtime;
+        let actors = data.Actors;
+        let plot = data.Plot;
+        let imageUrl = data.Poster;
+        let website = data.Website;
 
-    // Creating an AJAX call for search movie button being clicked
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function (response) {
-      // console.log(queryURL);
-      console.log(response);
-
-      // grabbing and storing data in vars from response:
-      let title = response.Title;
-      let year = response.Year;
-      let runtime = response.Runtime;
-      let actors = response.Actors;
-      let plot = response.Plot;
-      let imageUrl = response.Poster;
-      let website = response.Website;
-
-      //storing values in Database
-      db.collection('movies').add({
-        title: title,
-        year: year,
-        runtime: runtime,
-        actors: actors,
-        plot: plot,
-        image: imageUrl,
-        website: website
-      });
-      form.value = '';
-
-    });
-
+        //storing values in Database
+        db.collection('movies').add({
+          title: title,
+          year: year,
+          runtime: runtime,
+          actors: actors,
+          plot: plot,
+          image: imageUrl,
+          website: website
+        });
+        form.value = '';
+        console.log("resolved", data);
+      })
+      .catch(err => console.log("rejected", err.message));
   })
 
 
   //rendering movies
-  function renderMovie(doc) {
+  const renderMovie = doc => {
     let title = $("<h4 class= flow-text z-depth-4 blue darken-3 white-text'>");
     let year = $("<p>");
     let runtime = $("<p>");
@@ -155,7 +150,7 @@ $(function () {
     movieRow.prependTo(movieList);
 
     //showing gifs
-    buttonGifs.on('click', function (event) {
+    buttonGifs.on('click',  event => {
       event.preventDefault();
       //url for gifs
       let movieGif = $(this).attr("data-name");
@@ -178,10 +173,10 @@ $(function () {
     })
 
     // showing videos from youtube
-    buttonvVid.on("click", function (e) {
+    buttonvVid.on("click", function(e) {
       e.stopPropagation();
       let videos = $(this).attr("data-name");
-      // console.log("videos" + videos);
+
       //  Creating an $.get call from youtube api
       $.get(
         "https://www.googleapis.com/youtube/v3/search", {
@@ -192,24 +187,17 @@ $(function () {
         },
 
         //getting data
-        function (data) {
-          console.log(data);
-          $.each(data.items, function (i, item) {
-            // console.log(data);
+        data => {
+          // console.log(data);
+          $.each(data.items, (i, item) => {
             //getting output
             var videoId = item.id.videoId;
             let titleYoutube = item.snippet.title;
             let thumbYoutube = item.snippet.thumbnails.default.url;
-            // console.log(thumbYoutube);
             let titleY = $("<br><div>").append(titleYoutube);
-            // let vidId = $("<div>").append("YouTube Video ID: " + videoId);
-            // $("<a target='_blank'>").attr('href', doc.data().website).text(doc.data().website);
             let vidIdlink = $("<a target='_blank' >").attr('href', 'https://www.youtube.com/results?search_query=' + videoId).html('Watch on Youtube <i class="material-icons">ondemand_video</i>');
             let vidID = $("<div class='card-image'>");
-            // vidID.append(vidIdlink);
             let imgYoutube = $("<img class='responsive-img hoverable'>").attr("src", thumbYoutube).attr('video-id', videoId).css('width', '170px');
-            // let videoss = '<iframe width = "100%" height = "auto" src = "https://www.youtube.com/embed/' + videoId + 'frameborder="0" allow="autoplay; encrypted-media; picture-in-picture; gyroscope" allowfullscreen></iframe>';
-            // let imgYoutube = $('<div class="collection">').append(videoss);
             videoDiv.append(titleY, vidIdlink, imgYoutube);
           });
         }
@@ -217,7 +205,7 @@ $(function () {
     })
 
     // deleting data
-    cross.on('click', function (e) {
+    cross.on('click', e => {
       e.stopPropagation();
       // confirm('Do you want to delete this movie?');
       alert('Do you want to delete this movie?')
@@ -225,7 +213,6 @@ $(function () {
       // console.log(id);
       db.collection('movies').doc(id).delete();
       db.collection('movie-Youtube').doc(id).delete();
-      //   db.collection('movie-Youtube').doc(id).delete();
     });
   }
 
@@ -245,6 +232,4 @@ $(function () {
       }
     });
   })
-
-  
 });
