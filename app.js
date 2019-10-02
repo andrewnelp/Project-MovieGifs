@@ -58,7 +58,7 @@ $(function () {
 
   })
 
-  //renderin yourube thumbs
+  //renderin youtube thumbs
   // function renderYoutube(doc) {
   //   let videoDiv = $("<div>").attr('data-id', doc.id);
   //   let titleYoutube = $("<li>");
